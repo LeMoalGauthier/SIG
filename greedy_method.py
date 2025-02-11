@@ -192,7 +192,7 @@ class Affichage:
 graph2 = Graph()
 
 # Lecture de la liste des coordonnées des lieux d'un fichier CSV 
-graph2.charger_graph(f'Data/graph_{NB_LIEUX}.csv')
+graph2.charger_graph(f'C:\ISEN\M2\SIG_git\SIG\Data\graph_{NB_LIEUX}.csv')
 print(f"Liste des lieux générés : {graph2.liste_lieux[0].id_lieu}, {graph2.liste_lieux[0].x}, {graph2.liste_lieux[0].y}")
 print(f"Liste des lieux générés : {graph2.liste_lieux[1].id_lieu}, {graph2.liste_lieux[1].x}, {graph2.liste_lieux[1].y}")
 # Calcul d'une matrice de distance
@@ -244,5 +244,5 @@ for i in range(NB_LIEUX):
     affichage.mettre_a_jour_iteration(distance_totale, ordre_route)
     affichage.root.update()  # Mise à jour en temps réel
 
-print(f"Lieux visités : {lieux_visites}")
+print(f"Lieux visités : {ordre_route}")
 affichage.root.mainloop()
