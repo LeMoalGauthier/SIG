@@ -1,7 +1,9 @@
 from SIG_class import *
 from SIG_class.config import NB_LIEUX
+import time
 
 def main():
+    start_time = time.time()
     # Tests pour la classe Lieux
     lieu1 = Lieux("lieu_0", 2, 3)
     # Calcul de distance euclidienne
@@ -96,7 +98,7 @@ def main():
         # Afficher les deux routes sur la fenêtre
     affichage1.dessiner_lieux(lieu_depart=meilleure_route[0])  # Passer l'ID du lieu de départ
     affichage2.dessiner_lieux(lieu_depart=seconde_meilleure_route[0])  # Passer l'ID du lieu de départ
-    
+
     # Afficher les deux routes sur la fenêtre
     affichage1.dessiner_meilleure_route()
     affichage2.dessiner_meilleure_route()
@@ -108,8 +110,14 @@ def main():
     print(f"Lieux visités : {meilleure_route}")
     print(f"Lieux visités : {seconde_meilleure_route}")
 
+    # Calcul du temps d'exécution
+    end_time = time.time()  # Enregistrer le temps après l'exécution
+    execution_time = end_time - start_time  # Calculer la durée
+    print(f"Temps d'exécution du programme : {execution_time:.2f} secondes")
+
     affichage1.root.mainloop()
     affichage2.root.mainloop()
+
 
 # Appeler la fonction main pour exécuter les tests
 if __name__ == "__main__":
