@@ -93,6 +93,10 @@ def main():
     affichage1.mettre_a_jour_iteration(distance_meilleure, list(meilleure_route))
     affichage2.mettre_a_jour_iteration(distance_seconde_meilleure, list(seconde_meilleure_route))
 
+        # Afficher les deux routes sur la fenêtre
+    affichage1.dessiner_lieux(lieu_depart=meilleure_route[0])  # Passer l'ID du lieu de départ
+    affichage2.dessiner_lieux(lieu_depart=seconde_meilleure_route[0])  # Passer l'ID du lieu de départ
+    
     # Afficher les deux routes sur la fenêtre
     affichage1.dessiner_meilleure_route()
     affichage2.dessiner_meilleure_route()

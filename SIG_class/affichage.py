@@ -76,12 +76,16 @@ class Affichage:
         self.info_zone.insert(tk.END, f"Nombre d'itérations : {self.nb_iterations}\n")
         self.info_zone.insert(tk.END, f"Meilleure distance trouvée : {self.meilleure_distance:.2f}\n")
 
-    def dessiner_lieux(self):
+    def dessiner_lieux(self, lieu_depart=None):
         """Dessine les lieux sous forme de cercles avec leurs identifiants."""
         rayon = 20  # Rayon des cercles
         for lieu in self.liste_lieux:
             x, y = lieu.x, lieu.y
-            self.canvas.create_oval(x - rayon, y - rayon, x + rayon, y + rayon, fill="blue")
+            couleur = "blue"  # Couleur par défaut
+            if lieu.id_lieu == lieu_depart:  # Si c'est le lieu de départ
+                couleur = "red"  # Couleur du lieu de départ
+
+            self.canvas.create_oval(x - rayon, y - rayon, x + rayon, y + rayon, fill=couleur)
             self.canvas.create_text(x, y, text=str(lieu.id_lieu), fill="white", font=("Arial", 10, "bold"))
 
     def afficher_routes_et_matrice(self, event=None):
