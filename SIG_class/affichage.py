@@ -54,7 +54,8 @@ class Affichage:
     def mettre_a_jour_iteration(self, distance_trouvee, route):
         """Met à jour les meilleures routes si de nouvelles distances plus courtes sont trouvées."""
         from SIG_class import tk
-        self.nb_iterations += 1
+        from SIG_class.config import NB_LIEUX
+        self.nb_iterations = NB_LIEUX
 
         # Vérifie que tous les lieux sont visités une seule fois avant de revenir au point de départ
         if len(route) == len(set(route)) + 1 and route[0] == route[-1]:
@@ -74,7 +75,6 @@ class Affichage:
         self.info_zone.delete("1.0", tk.END)
         self.info_zone.insert(tk.END, f"Nombre d'itérations : {self.nb_iterations}\n")
         self.info_zone.insert(tk.END, f"Meilleure distance trouvée : {self.meilleure_distance:.2f}\n")
-        self.info_zone.insert(tk.END, f"Deuxième meilleure distance trouvée : {self.deuxieme_meilleure_distance:.2f}\n")
 
     def dessiner_lieux(self):
         """Dessine les lieux sous forme de cercles avec leurs identifiants."""
