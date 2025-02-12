@@ -39,10 +39,9 @@ def main():
     # Tests pour la classe Affichage
     affichage = Affichage(graph2.liste_lieux, "Groupe - H")
 
-    # Simulation d'un algorithme (boucle sur le nombre de lieux)
-    point_de_depart = 1
-    # import random
-    for i in range(NB_LIEUX):
+    # Stockage des meilleures routes uniques
+    routes_uniques = set()
+    for point_de_depart in range(NB_LIEUX):
         lieux_visites = {point_de_depart}  # On commence au point 0
         ordre_route = [point_de_depart]
         distance_totale = 0
@@ -68,10 +67,40 @@ def main():
         distance_totale += graph2.matrice_od[lieu_actuel][point_de_depart]
         ordre_route.append(point_de_depart)
 
-        affichage.mettre_a_jour_iteration(distance_totale, ordre_route)
-        affichage.root.update()  # Mise à jour en temps réel
+        # Eviter d'enregistrer le même route en aller-retour
+        route_tuple = tuple(ordre_route)
+        reverse_route_tuple = tuple(reversed(ordre_route))
 
-    print(f"Lieux visités : {ordre_route}")
+        if reverse_route_tuple not in routes_uniques:
+            routes_uniques.add(route_tuple)
+
+    # Tri des routes par distance
+    meilleures_routes = sorted(routes_uniques, key=lambda x: sum(graph2.matrice_od[x[i]][x[i+1]] for i in range(len(x)-1)))
+
+    # Sélection des deux plus petites routes distinctes
+    if len(meilleures_routes) >= 2:
+        meilleure_route = meilleures_routes[0]
+        seconde_meilleure_route = meilleures_routes[1]
+    else:
+        print("Impossible de trouver deux routes distinctes.")
+        return
+    
+   # Afficher les distances totales des routes
+    distance_meilleure = sum(graph2.matrice_od[meilleure_route[i]][meilleure_route[i+1]] for i in range(len(meilleure_route)-1))
+    distance_seconde_meilleure = sum(graph2.matrice_od[seconde_meilleure_route[i]][seconde_meilleure_route[i+1]] for i in range(len(seconde_meilleure_route)-1))
+
+    affichage.mettre_a_jour_iteration(distance_meilleure, list(meilleure_route))
+    affichage.mettre_a_jour_iteration(distance_seconde_meilleure, list(seconde_meilleure_route))
+
+    # Afficher les deux routes sur la fenêtre
+    affichage.dessiner_meilleure_route()
+
+    # Afficher les distances totales des routes
+    print(f"Distance de la meilleure route : {sum(graph2.matrice_od[meilleure_route[i]][meilleure_route[i+1]] for i in range(len(meilleure_route)-1)):.2f}")
+    print(f"Distance de la seconde meilleure route : {sum(graph2.matrice_od[seconde_meilleure_route[i]][seconde_meilleure_route[i+1]] for i in range(len(seconde_meilleure_route)-1)):.2f}")
+    
+    print(f"Lieux visités : {meilleure_route}")
+    print(f"Lieux visités : {seconde_meilleure_route}")
     
     affichage.root.mainloop()
 
