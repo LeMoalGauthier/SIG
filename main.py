@@ -37,7 +37,8 @@ def main():
     print(f"Distance de la route : {dist}")
 
     # Tests pour la classe Affichage
-    affichage = Affichage(graph2.liste_lieux, "Groupe - H")
+    affichage1 = Affichage(graph2.liste_lieux, "Meilleure route")
+    affichage2 = Affichage(graph2.liste_lieux, "Deuxieme meilleure route")
 
     # Stockage des meilleures routes uniques
     routes_uniques = set()
@@ -67,7 +68,7 @@ def main():
         distance_totale += graph2.matrice_od[lieu_actuel][point_de_depart]
         ordre_route.append(point_de_depart)
 
-        # Eviter d'enregistrer le même route en aller-retour
+        # Eviter d'enregistrer la même route en aller-retour
         route_tuple = tuple(ordre_route)
         reverse_route_tuple = tuple(reversed(ordre_route))
 
@@ -85,15 +86,16 @@ def main():
         print("Impossible de trouver deux routes distinctes.")
         return
     
-   # Afficher les distances totales des routes
+    # Afficher les distances totales des routes
     distance_meilleure = sum(graph2.matrice_od[meilleure_route[i]][meilleure_route[i+1]] for i in range(len(meilleure_route)-1))
     distance_seconde_meilleure = sum(graph2.matrice_od[seconde_meilleure_route[i]][seconde_meilleure_route[i+1]] for i in range(len(seconde_meilleure_route)-1))
 
-    affichage.mettre_a_jour_iteration(distance_meilleure, list(meilleure_route))
-    affichage.mettre_a_jour_iteration(distance_seconde_meilleure, list(seconde_meilleure_route))
+    affichage1.mettre_a_jour_iteration(distance_meilleure, list(meilleure_route))
+    affichage2.mettre_a_jour_iteration(distance_seconde_meilleure, list(seconde_meilleure_route))
 
     # Afficher les deux routes sur la fenêtre
-    affichage.dessiner_meilleure_route()
+    affichage1.dessiner_meilleure_route()
+    affichage2.dessiner_meilleure_route()
 
     # Afficher les distances totales des routes
     print(f"Distance de la meilleure route : {sum(graph2.matrice_od[meilleure_route[i]][meilleure_route[i+1]] for i in range(len(meilleure_route)-1)):.2f}")
@@ -101,8 +103,9 @@ def main():
     
     print(f"Lieux visités : {meilleure_route}")
     print(f"Lieux visités : {seconde_meilleure_route}")
-    
-    affichage.root.mainloop()
+
+    affichage1.root.mainloop()
+    affichage2.root.mainloop()
 
 # Appeler la fonction main pour exécuter les tests
 if __name__ == "__main__":
